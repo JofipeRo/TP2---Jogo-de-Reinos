@@ -46,7 +46,7 @@ public class Game {
 	
 	
 	public boolean hasNextPlayer(int i) {
-		return i < counterReinos;
+		return i < numberReinos;
 	}
 	
 	
