@@ -15,7 +15,7 @@ public class Castelos {
 	}
 	
 	public void changeOwner(Reinos r1) {
-		owner=r1.getName();
+		owner=r1.getReinoName();
 	}
 	public void addTreasure() {
 		treasure++;
