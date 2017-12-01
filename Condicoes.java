@@ -20,4 +20,36 @@ public class Condicoes {
 	public boolean goodCastlesTreasure(Game g1, Castelos[] c1) {
 		return c1[g1.getCounterCastles()-1].getTreasure() > 0;
 	}
+	public boolean lookForCastleName(Castelos[] c1, Game g1, String name) {
+		int i=0;
+		boolean found=false;
+		while(i<g1.getCounterCastles()-1 && !found) {
+			if(name.compareTo(c1[i].getName())==0)
+				found=true;
+			i++;
+		}
+		return found;
+	}
+	public boolean lookForReinoName(Reinos[] r1, Game g1, String name) {
+		int i=0;
+		boolean found=false;
+		while(i<g1.getCounterReinos()-1) {
+			if(name.compareTo(r1[i].getReinoName())==0)
+				found=true;
+			i++;
+		}
+		return found;
+	}
+	public int castlesAlreadyTaken(Reinos[] r1, Castelos[] c1, Game g1, String name) {
+		int found=-1;
+		int i=0;
+		while(i<g1.getCounterReinos() && found==-1) {
+			if(name.compareTo(c1[i].getName())==0)
+				found = 0;	
+			if(found==0 && !c1[i].getOwner().equals("sem dono"))
+				found=-2;
+			i++;
+		}
+		return found;
+	}
 }
