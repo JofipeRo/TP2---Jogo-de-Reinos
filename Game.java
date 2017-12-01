@@ -8,6 +8,8 @@ public class Game {
 	private int xMap;
 	private int yMap;
 	private int currentPlayer;
+	private int currentCastle;
+	private int currentReino;
 	public Reinos[] r1;
 	public Castelos[] c1;
 	public boolean isGameOn() {
@@ -32,15 +34,22 @@ public class Game {
 	public void addCastles(Castelos c2, String name, int treasure, int x, int y) {
 		c2 = new Castelos(name, treasure, x, y);
 		c1[counterCastles++]=c2;
+		currentCastle++;
 	}
 	public int getCounterCastles() {
 		return counterCastles;
 	}
+	public int getCounterReinos() {
+		return counterReinos;
+	}
+	// Duvida sobre o remove castles: se e possivel que o jogo nao inicialize devido a falta de castelos inicializados,
+	// talvez o while do main tenha de funcionar de forma diferente para que que seja feito apenas nCastles vezes mesmo dando erro
+	// perguntar ao stor segunda (mesma duvida para os reinos)
 	public void removeCastles() {
 		counterCastles--;
 	}
 	public boolean hasNextCastles() {
-		return counterCastles < numberCastles;
+		return currentCastle < numberCastles;
 	}
 	public void addReinos (Reinos r2, String name, String castle, int treasure) {
 		if(choseCastle(castle, c1)!=-1) {
@@ -49,9 +58,13 @@ public class Game {
 		r2 = new Reinos(name, treasure);
 		r1[counterReinos++] = r2;
 		c1[choseCastle(castle,c1)].changeOwner(r1[counterReinos-1]);
+		currentReino++;
+	}
+	public void removerReinos() {
+		counterReinos--;
 	}
 	public boolean hasNextReinos() {
-		return counterCastles < numberCastles;
+		return currentReino < numberReinos;
 	}
 	public String getTeamName() {
 		return r1[currentPlayer].getReinoName();
@@ -77,7 +90,7 @@ public class Game {
 		currentPlayer=0;
 	}
 	public boolean hasNextPlayer() {
-		return currentPlayer+1 < numberReinos;
+		return currentPlayer+1 <= counterReinos;
 	}
 	public void nextPlayer() {
 		if(hasNextPlayer())
@@ -86,7 +99,9 @@ public class Game {
 			currentPlayer=0;
 		}
 	}
-	
+	public int getPlayer() {
+		return currentPlayer;
+	}
 	
 	
 	
