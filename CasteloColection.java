@@ -33,6 +33,14 @@ public class CasteloColection {
 		}
 		return found;
 	}
+	public int getCastleWithName(String name) {
+		int j=-1;
+		for(int i=0;i<counterCastelo;i++) {
+			if(c1[i].getName().equals(name))
+				j=i;
+		}
+		return j;
+	}
 	public Castelo getCastelo(String name) {
 		Castelo c2=null;
 		boolean found=false;
@@ -50,5 +58,8 @@ public class CasteloColection {
 			treasure+=c1[i].getTreasure();
 		}
 		return treasure;
+	}
+	public void spendMoneyOfCastle(String type, int i) {
+		c1[i].spendMoney(type);
 	}
 }

@@ -22,4 +22,8 @@ public class SoldadoColection {
 	public String getSoldadoType(int i) {
 		return soldados[i].getType();
 	}
+	public void addSoldado(String type, int x, int y) {
+		Soldado s1= new Soldado(x,y,type);
+		soldados[counterSoldados++]=s1;
+	}
 }

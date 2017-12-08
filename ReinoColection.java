@@ -2,7 +2,6 @@
 public class ReinoColection {
 	private Reino[] r1;
 	private int counterReino;
-	private Reino[] rr=null;
 	
 	public ReinoColection(int size) {
 		r1=new Reino[size];
@@ -57,9 +56,14 @@ public class ReinoColection {
 		return Pos;
 	}
 	public String getReinoInfo(int k) {
+		Reino[] rr = new Reino[counterReino];
+		Reino r2;
+		for(int a=0; a<counterReino; a++) {
+			r2=r1[a];
+			rr[a]=r2;
+		}
 		String reinoInfo = "";
-		rr=r1;
-		/*for(int i=1; i<counterReino; i++) {
+		for(int i=1; i<counterReino; i++) {
 			for(int j= counterReino-1; j>=i ;j--) {
 				if(rr[j-1].greaterThan(rr[j])) {
 					Reino temp = rr[j-1];
@@ -67,9 +71,14 @@ public class ReinoColection {
 					rr[j]=temp;
 					}		
 				}
-		}*/
+		}
 		reinoInfo=reinoInfo+rr[k].getReinoName() + ", " + rr[k].getNCastles() + " castelos, " + rr[k].getNSoldiers() + " soldados, ";
 		reinoInfo=reinoInfo+rr[k].getTotalTreasure() + " de riqueza";
 		return reinoInfo;
 		}
+	
+	
+	public void addSoldadosToReino(String type, String castle, int i) {
+		r1[i].addSoldadoToReino(type, castle);
+	}
 }

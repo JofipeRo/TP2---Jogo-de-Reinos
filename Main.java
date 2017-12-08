@@ -67,6 +67,9 @@ public class Main {
 		case REINOS:
 			printReinos(g1);
 			break;
+		case RECRUTA:
+			recrutar(g1, s1);
+			break;
 		default:
 			System.out.println("Opcao inexistente.");
 			s1.nextLine();
@@ -75,6 +78,18 @@ public class Main {
 			
 		}
 
+	
+	private static void recrutar(Game g1, Scanner s1) {
+		if(!g1.isGameOn()) {
+			System.out.println("Comando inactivo.");
+		}
+		else {
+			String type = s1.next();
+			String castle = s1.nextLine().trim();
+			g1.addSoldadoToReino(type, castle);
+			g1.nextPlayer();
+		}
+	}
 	
 	private static void printCastelos(Game g1) {
 		if(!g1.isGameOn()) {

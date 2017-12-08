@@ -99,6 +99,9 @@ public class Game {
 	public String getReinoInfo(int i) {
 		return reinos.getReinoInfo(i);
 	}
+	public void addSoldadoToReino(String type, String castle){
+		reinos.addSoldadosToReino(type, castle, getPlayer());
+	}
 	//    **** INTERACTOR ****
 	public void inicializeInteratiorPlayer() {
 		currentPlayer=0;

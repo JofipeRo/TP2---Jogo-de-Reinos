@@ -42,4 +42,17 @@ public class Reino {
 	public boolean greaterThan(Reino other) {
 		return this.getReinoName().compareTo(other.getReinoName())>0;
 	}
+	public void addSoldadoToReino(String type, String castle) {
+		int i = getCastleWithName(castle);
+		int x;
+		int y;
+		x=getCastleXPos(i);
+		y=getCastleYPos(i);
+		reinoSoldados.addSoldado(type, x, y);
+		reinoCastelos.spendMoneyOfCastle(type, i);
+		
+	}
+	public int getCastleWithName(String castle) {
+		return reinoCastelos.getCastleWithName(castle);
+	}
 	}

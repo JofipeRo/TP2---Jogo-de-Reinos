@@ -30,4 +30,11 @@ public class Castelo {
 	public boolean sameCastle(String name) {
 		return getName().equals(name);
 	}
+	public void spendMoney(String type) {
+		type.toLowerCase();
+		if(type.equals("espadachim") || type.equals("lanceiro"))
+			treasure-=2;
+		if(type.equals("cavaleiro"))
+			treasure-=4;
+	}
 }
