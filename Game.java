@@ -62,16 +62,18 @@ public class Game {
 	public int getCounterReinos() {
 		return reinos.getCounter();
 	}
-	public void addReinos (Reino r2, String name, String castle, int treasure, Castelo c2) {
-		treasure=castelos.getTreasure(choseCastle(castle));
+	public void addReinos (Reino r2, String name, String castle, Castelo c2) {
 		c2=castelos.getCastelo(castle);
 		reinos.addReino(r2, c2);
 	}
 	public String getReinosName(int i) {
 		return reinos.getName(i);
 	}
-	public int getNCastles(int i) {
+	public int getNCastlesByReino(int i) {
 		return reinos.numberCastelos(i);
+	}
+	public int getNSoldados(int i) {
+		return reinos.numberSoldiers(i);
 	}
 	public int getTotalTreasure(int i){
 		return reinos.getTotalTreasure(i);
@@ -94,7 +96,9 @@ public class Game {
 		}
 		return i;
 	}
-	
+	public String getReinoInfo(int i) {
+		return reinos.getReinoInfo(i);
+	}
 	//    **** INTERACTOR ****
 	public void inicializeInteratiorPlayer() {
 		currentPlayer=0;

@@ -1,17 +1,13 @@
 
 public class Reino {
 	private String teamName;
-	private int numberCastles;
-	private int numberSoldiers;
-	private int totalTreasure;
+	private SoldadoColection reinoSoldados;
 	private CasteloColection reinoCastelos;
 	
-	public Reino(String name, int treasure, int size) {
+	public Reino(String name, int size) {
 		reinoCastelos=new CasteloColection(size);
+		reinoSoldados=new SoldadoColection();
 		teamName=name;
-		numberCastles = reinoCastelos.getCounter();
-		numberSoldiers=0;
-		totalTreasure=treasure;
 	}
 	public String getReinoName() {
 		return teamName;
@@ -20,10 +16,7 @@ public class Reino {
 		return reinoCastelos.getCounter();
 	}
 	public int getNSoldiers() {
-		return numberSoldiers;
-	}
-	public int getTotalTreasure() {
-		return totalTreasure;
+		return reinoSoldados.getCounterSoldados();
 	}
 	public boolean searchForCastle(String name) {
 		return reinoCastelos.nameFound(name);
@@ -42,5 +35,11 @@ public class Reino {
 	}
 	public int getCastleYPos(int i) {
 		return reinoCastelos.getYPos(i);
+	}
+	public int getTotalTreasure() {
+		return reinoCastelos.getSumTreasure();
+	}
+	public boolean greaterThan(Reino other) {
+		return this.getReinoName().compareTo(other.getReinoName())>0;
 	}
 	}

@@ -44,4 +44,11 @@ public class CasteloColection {
 		}
 		return c2;
 	}
+	public int getSumTreasure() {
+		int treasure=0;
+		for(int i=0; i<counterCastelo; i++) {
+			treasure+=c1[i].getTreasure();
+		}
+		return treasure;
+	}
 }

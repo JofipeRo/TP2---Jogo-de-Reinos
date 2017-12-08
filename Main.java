@@ -61,6 +61,12 @@ public class Main {
 		case CASTELOS:
 			printCastelos(g1);
 			break;
+		case EXERCITO:
+			printExercito(g1);
+			break;
+		case REINOS:
+			printReinos(g1);
+			break;
 		default:
 			System.out.println("Opcao inexistente.");
 			s1.nextLine();
@@ -75,8 +81,8 @@ public class Main {
 			System.out.println("Comando inactivo.");
 		}
 		else {
-			System.out.println(g1.getNCastles(g1.getPlayer()) + " castelos:");
-			for(int i=0; i<g1.getNCastles(g1.getPlayer()); i++) {
+			System.out.println(g1.getNCastlesByReino(g1.getPlayer()) + " castelos:");
+			for(int i=0; i<g1.getNCastlesByReino(g1.getPlayer()); i++) {
 				System.out.println(g1.getCastelosNameByReino(i) + " com riqueza " + g1.getCastelosTreasureByReino(i)
 				+ " na posicao " + g1.getCastelosPositionByReino(i));
 			}
@@ -122,6 +128,25 @@ public class Main {
 		}
 	}
 	
+	private static void printExercito(Game g1) {
+		if(!g1.isGameOn())
+			System.out.println("Comando inactivo.");
+		else {
+			if(g1.getNSoldados(g1.getPlayer())==0)
+				System.out.println("Sem exercito.");
+		}
+	}
+	
+	private static void printReinos(Game g1) {
+		if(!g1.isGameOn())
+			System.out.println("Comando inactivo.");
+		else {
+			System.out.println(g1.getCounterReinos() + " reinos:");
+			for(int i=0; i<g1.getCounterReinos();i++) {
+				System.out.println(g1.getReinoInfo(i));
+			}
+		}
+	}
 	private static void createGame(String command, Scanner s1, Game g1) {
 		g1.closeGame(g1);
 		Castelo c2=null;
@@ -132,7 +157,6 @@ public class Main {
 		int yC;
 		String reinoName;
 		String castle;
-		int totalTreasure=0;
 		int x = s1.nextInt();
 		int y = s1.nextInt();
 		int nReinos = s1.nextInt();
@@ -194,8 +218,8 @@ public class Main {
 										System.out.println("Castelo ja ocupado.");
 									}
 									else {
-										r2 = new Reino(reinoName, totalTreasure, nCastles);
-										g1.addReinos(r2, reinoName, castle, totalTreasure, c2);
+										r2 = new Reino(reinoName, nCastles);
+										g1.addReinos(r2, reinoName, castle, c2);
 									}
 							}
 						}
