@@ -16,7 +16,6 @@ public class Main {
 	private static final String RECRUTA = "recruta";
 	private static final String SOLDADO = "soldado";
 	private static final String ERRO_FATAL = "Erro fatal, jogo nao inicializado.";
-	private static final int DEFAULT_SIZE = 100;
 	public static void main(String[] args) {
 		Game g1= new Game();
 		printMenu();
@@ -73,6 +72,9 @@ public class Main {
 		case RECRUTA:
 			recrutar(g1, s1);
 			break;
+		case SOLDADO:
+			moverSoldado(g1,s1);
+			break;
 		default:
 			System.out.println("Opcao inexistente.");
 			s1.nextLine();
@@ -80,6 +82,58 @@ public class Main {
 		}
 			
 		}
+	
+	private static void moverSoldado(Game g1, Scanner s1) {
+		int xPos=s1.nextInt();
+		int yPos=s1.nextInt();
+		String move=null;
+		int soldado=g1.saveWhichSoldado(xPos, yPos);
+		if(soldado==-1) {
+			System.out.println("Nao existe nenhum soldado ilustre da casa de " + g1.getTeamName() + " na posicao ("
+					+ xPos  + "," + yPos + ").");
+			s1.nextLine();
+		}
+		else {
+			String type=g1.getReinoSoldadoType(xPos, yPos);
+			if(type.equals(ESPADACHIM)||type.equals(LANCEIRO)) {
+				move=s1.next();
+				if(!g1.mapLimits(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), move)) {
+					System.out.println("O " + type + " da ilustre casa de " + g1.getTeamName() + " e um cobardolas.");
+				}
+				else {
+					if(g1.reinoSoldadoColision(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado, move)) {
+						System.out.println("O " + type + " da ilustre casa de " + g1.getTeamName() + 
+								" devia tentar ir para outro sitio.");
+					}
+					else {
+					g1.moveReinoSoldado(soldado, move);
+					}
+				}
+				System.out.println(g1.getTeamName() + " " + type + " (" + g1.getReinoSoldadoXPos(soldado)+ ","
+						+ g1.getReinoSoldadosYPos(soldado) + ")");
+		}
+			if(type.equals(CAVALEIRO)) {
+				for(int movesLeft=3; movesLeft>0; movesLeft--) {
+					move=s1.next();
+					if(!g1.mapLimits(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), move)) {
+						System.out.println("O cavaleiro da ilustre casa de " + g1.getTeamName() + " e um cobardolas.");
+					}
+					else {
+						if(g1.reinoSoldadoColision(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado, move)) {
+							System.out.println("O cavaleiro da ilustre casa de " + g1.getTeamName() + 
+									" devia tentar ir para outro sitio.");
+						}
+						else {
+							g1.moveReinoSoldado(soldado, move);
+						}
+					}
+					System.out.println(g1.getTeamName() + " " + CAVALEIRO + " (" + g1.getReinoSoldadoXPos(soldado)+ ","
+							+ g1.getReinoSoldadosYPos(soldado) + ")");
+					}
+			}
+			}
+		g1.nextPlayer();
+	}
 
 	
 	private static void recrutar(Game g1, Scanner s1) {
@@ -198,6 +252,12 @@ public class Main {
 		else {
 			if(g1.getNSoldados(g1.getPlayer())==0)
 				System.out.println("Sem exercito.");
+			else {
+				System.out.println(g1.getNSoldados(g1.getPlayer()) + " soldados:");
+				for(int i=0;i<g1.getNSoldados(g1.getPlayer());i++) {
+					System.out.println(g1.printReinoSoldadoInfo(i, g1.getPlayer()));
+				}
+			}
 		}
 	}
 	

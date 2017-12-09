@@ -45,6 +45,9 @@ public class Reino {
 	public int getSoldadoYPos(int i) {
 		return reinoSoldados.getSoldadoYPos(i);
 	}
+	public String getSoldadoType(int i) {
+		return reinoSoldados.getSoldadoType(i);
+	}
 	public boolean greaterThan(Reino other) {
 		return this.getReinoName().compareTo(other.getReinoName())>0;
 	}
@@ -75,4 +78,16 @@ public class Reino {
 		}
 		return found;
 	}
+	public String printSoldadoInfo(int i) {
+		return reinoSoldados.printSoldadoInfo(i);
 	}
+	public int findSoldado(int xPos, int yPos) {
+		return reinoSoldados.getSoldado(xPos, yPos);
+	}
+	public void moveSoldado(int i, String direcao) {
+		reinoSoldados.move(i , direcao);
+	}
+	public boolean soldadoColision(int xPos,int yPos, int soldado, String direcao) {
+		return reinoSoldados.colision(xPos, yPos, soldado, direcao);
+	}
+}

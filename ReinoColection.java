@@ -90,4 +90,25 @@ public class ReinoColection {
 	public boolean isReinoCastleOcupado(int i, String castle) {
 		return r1[i].reinoCastleOcupado(castle);
 	}
+	public String printReinoSoldadoInfo(int i, int player) {
+		return r1[player].printSoldadoInfo(i);
+	}
+	public int getReinoSoldadoXPos(int i, int player) {
+		return r1[player].getSoldadoXPos(i);
+	}
+	public int getReinoSoldadoYPos(int i, int player) {
+		return r1[player].getSoldadoYPos(i);
+	}
+	public String getReinoSoldadoType(int i, int player) {
+		return r1[player].getSoldadoType(i);
+	}
+	public int findSoldado(int xPos, int yPos, int player) {
+		return r1[player].findSoldado(xPos, yPos);
+	}
+	public void moveReinoSoldado(int i, String direcao, int player) {
+		r1[player].moveSoldado(i, direcao);
+	}
+	public boolean reinoSoldadoColision(int xPos,int yPos, int soldado, String direcao, int player) {
+		return r1[player].soldadoColision(xPos, yPos, soldado, direcao);
+	}
 }

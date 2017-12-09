@@ -19,4 +19,16 @@ public class Soldado {
 	public String getType() {
 		return type;
 	}
+	
+	public void move(String direcao) {
+		direcao.toLowerCase();
+		if(direcao.equals("norte"))
+			yPos++;
+		if(direcao.equals("sul"))
+			yPos--;
+		if(direcao.equals("este"))
+			xPos++;
+		if(direcao.equals("oeste"))
+			xPos--;
+	}
 }

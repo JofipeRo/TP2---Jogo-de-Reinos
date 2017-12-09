@@ -108,6 +108,9 @@ public class Game {
 	public boolean hasCastleEnoughMoney(String castle, int money) {
 		return reinos.castleHasEnoughMoney(getPlayer(), castle, money);
 	}
+	public String printReinoSoldadoInfo(int i, int player) {
+		return reinos.printReinoSoldadoInfo(i, player);
+	}
 	//    **** INTERACTOR ****
 	public void inicializeInteratiorPlayer() {
 		currentPlayer=0;
@@ -128,6 +131,28 @@ public class Game {
 	}
 	public boolean reinoHasCastle(String castle) {
 		return reinos.reinoHasCastle(getPlayer(), castle);
+	}
+	public String getReinoSoldadoType(int xPos, int yPos) {
+		return reinos.getReinoSoldadoType(reinos.findSoldado(xPos, yPos, getPlayer()), getPlayer());
+	}
+	public void moveReinoSoldado(int i, String direcao) {
+		reinos.moveReinoSoldado(i, direcao, getPlayer());
+	}
+	public boolean mapLimits(int xPos, int yPos, String direcao) {
+		int xNewPos = xPos;
+		int yNewPos = yPos;
+		if(direcao.equals("norte"))
+			yNewPos++;
+		if(direcao.equals("sul"))
+			yNewPos--;
+		if(direcao.equals("este"))
+			xNewPos++;
+		if(direcao.equals("oeste"))
+			xNewPos--;
+		return xNewPos>0 && yNewPos>0 && xNewPos<=getXMap() && yNewPos <=getYMap();
+	}
+	public boolean reinoSoldadoColision(int xPos,int yPos, int soldado, String direcao) {
+		return reinos.reinoSoldadoColision(xPos, yPos, soldado, direcao, getPlayer());
 	}
 	//   **** Condicoes ****
 	
@@ -154,6 +179,16 @@ public class Game {
 	}
 	public boolean isReinoCasteloOcupado(String castle) {
 		return reinos.isReinoCastleOcupado(getPlayer(), castle);
+	}
+	//   **** Soldados ****
+	public int getReinoSoldadoXPos(int i) {
+		return reinos.getReinoSoldadoXPos(i, getPlayer());
+	}
+	public int getReinoSoldadosYPos(int i) {
+		return reinos.getReinoSoldadoYPos(i, getPlayer());
+	}
+	public int saveWhichSoldado(int xPos, int yPos) {
+		return reinos.findSoldado(xPos, yPos, getPlayer());
 	}
 }
 
