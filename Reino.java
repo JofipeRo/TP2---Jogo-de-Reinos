@@ -39,6 +39,12 @@ public class Reino {
 	public int getTotalTreasure() {
 		return reinoCastelos.getSumTreasure();
 	}
+	public int getSoldadoXPos(int i) {
+		return reinoSoldados.getSoldadoXPos(i);
+	}
+	public int getSoldadoYPos(int i) {
+		return reinoSoldados.getSoldadoYPos(i);
+	}
 	public boolean greaterThan(Reino other) {
 		return this.getReinoName().compareTo(other.getReinoName())>0;
 	}
@@ -54,5 +60,19 @@ public class Reino {
 	}
 	public int getCastleWithName(String castle) {
 		return reinoCastelos.getCastleWithName(castle);
+	}
+	public boolean castleHasEnoughMoney(String castle, int money) {
+		return reinoCastelos.castleHasEnoughMoney(getCastleWithName(castle), money);
+	}
+	public boolean reinoCastleOcupado(String castle) {
+		boolean found=false;
+		for(int i = 0; i<getNSoldiers();i++) {
+			int x= getSoldadoXPos(i);
+			int y= getSoldadoYPos(i);
+			if(reinoCastelos.castleOcupado(getCastleWithName(castle), x, y)) {
+				found=true;
+			}
+		}
+		return found;
 	}
 	}

@@ -81,4 +81,13 @@ public class ReinoColection {
 	public void addSoldadosToReino(String type, String castle, int i) {
 		r1[i].addSoldadoToReino(type, castle);
 	}
+	public boolean reinoHasCastle(int i, String castle) {
+		return r1[i].getCastleWithName(castle)!=-1;
+	}
+	public boolean castleHasEnoughMoney(int i, String castle, int money) {
+		return r1[i].castleHasEnoughMoney(castle, money);
+	}
+	public boolean isReinoCastleOcupado(int i, String castle) {
+		return r1[i].reinoCastleOcupado(castle);
+	}
 }

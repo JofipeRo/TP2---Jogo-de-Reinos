@@ -57,7 +57,10 @@ public class Game {
 			owner=reinos.getName(i);
 		return owner;
 	}	
-	
+	public void addMoneyToCastelos() {
+		for(int i=0;i<castelos.getCounter();i++) 
+			castelos.addMoney(i);
+	}
 	//   **** REINOS ****
 	public int getCounterReinos() {
 		return reinos.getCounter();
@@ -102,6 +105,9 @@ public class Game {
 	public void addSoldadoToReino(String type, String castle){
 		reinos.addSoldadosToReino(type, castle, getPlayer());
 	}
+	public boolean hasCastleEnoughMoney(String castle, int money) {
+		return reinos.castleHasEnoughMoney(getPlayer(), castle, money);
+	}
 	//    **** INTERACTOR ****
 	public void inicializeInteratiorPlayer() {
 		currentPlayer=0;
@@ -115,11 +121,14 @@ public class Game {
 		else {
 			currentPlayer=0;
 		}
+		addMoneyToCastelos();
 	}
 	public int getPlayer() {
 		return currentPlayer;
 	}
-	
+	public boolean reinoHasCastle(String castle) {
+		return reinos.reinoHasCastle(getPlayer(), castle);
+	}
 	//   **** Condicoes ****
 	
 	public boolean mapSize() {
@@ -142,6 +151,9 @@ public class Game {
 	public String getCastelosPositionByReino(int i) {
 		String pos= "(" + reinos.getReinoCastelosPos(i, getPlayer()) + ")";
 		return pos;
+	}
+	public boolean isReinoCasteloOcupado(String castle) {
+		return reinos.isReinoCastleOcupado(getPlayer(), castle);
 	}
 }
 

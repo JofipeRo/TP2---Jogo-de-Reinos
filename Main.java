@@ -3,6 +3,9 @@
  */
 import java.util.Scanner;
 public class Main {
+	private static final String CAVALEIRO = "cavaleiro";
+	private static final String LANCEIRO = "lanceiro";
+	private static final String ESPADACHIM = "espadachim";
 	private static final String NOVO_JOGO = "novo";
 	private static final String AJUDA = "ajuda";
 	private static final String SAI = "sai";
@@ -82,13 +85,59 @@ public class Main {
 	private static void recrutar(Game g1, Scanner s1) {
 		if(!g1.isGameOn()) {
 			System.out.println("Comando inactivo.");
+			s1.nextLine();
 		}
 		else {
 			String type = s1.next();
+			type.toLowerCase();
 			String castle = s1.nextLine().trim();
-			g1.addSoldadoToReino(type, castle);
-			g1.nextPlayer();
+			if(!type.equals(ESPADACHIM) && !type.equals(LANCEIRO) && !type.equals(CAVALEIRO))
+				System.out.println("Tipo de soldado inexistente.");
+			else {
+				if(!g1.reinoHasCastle(castle))
+					System.out.println("Castelo invadido ilegalmente.");
+				else {
+					if(g1.isReinoCasteloOcupado(castle))
+						System.out.println("Castelo nao livre.");
+					else {
+					switch(type) {
+					case ESPADACHIM:
+						if(g1.hasCastleEnoughMoney(castle, 2)) {
+							g1.addSoldadoToReino(ESPADACHIM, castle);
+							System.out.println(ESPADACHIM + " recrutado no " + castle + " do reino " + g1.getTeamName()
+							   + " por 2 moedas.");
+							}
+						else {
+							System.out.println("Riqueza insuficiente para recrutamento.");
+						}
+						break;
+					case LANCEIRO:
+						if(g1.hasCastleEnoughMoney(castle, 2)) {
+							g1.addSoldadoToReino(LANCEIRO, castle);
+							System.out.println(LANCEIRO + " recrutado no " + castle + " do reino " + g1.getTeamName()
+							   + " por 2 moedas.");
+						}
+						else {
+							System.out.println("Riqueza insuficiente para recrutamento.");
+						}
+						break;
+					case CAVALEIRO:
+						if(g1.hasCastleEnoughMoney(castle, 4)) {
+							g1.addSoldadoToReino(CAVALEIRO, castle);
+							System.out.println(CAVALEIRO + " recrutado no " + castle + " do reino " + g1.getTeamName()
+							   + " por 4 moedas.");
+						}
+						else {
+							System.out.println("Riqueza insuficiente para recrutamento.");
+						}
+						break;
+					}
+					}
+			
+			}
 		}
+		g1.nextPlayer();
+	}
 	}
 	
 	private static void printCastelos(Game g1) {

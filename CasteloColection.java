@@ -62,4 +62,13 @@ public class CasteloColection {
 	public void spendMoneyOfCastle(String type, int i) {
 		c1[i].spendMoney(type);
 	}
+	public void addMoney(int i) {
+		c1[i].addMoney();
+	}
+	public boolean castleHasEnoughMoney(int i, int money) {
+		return c1[i].hasEnoughMoney(money);
+	}
+	public boolean castleOcupado(int i, int x, int y) {
+		return c1[i].castleOcupado(x, y);
+	}
 }

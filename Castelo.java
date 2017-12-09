@@ -37,4 +37,13 @@ public class Castelo {
 		if(type.equals("cavaleiro"))
 			treasure-=4;
 	}
+	public void addMoney() {
+		treasure++;
+	}
+	public boolean hasEnoughMoney(int money) {
+		return treasure-money>=0;
+	}
+	public boolean castleOcupado(int x, int y) {
+		return xPos==x && yPos==y;
+	}
 }
