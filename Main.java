@@ -106,6 +106,13 @@ public class Main {
 								" devia tentar ir para outro sitio.");
 					}
 					else {
+						if(g1.soldadoInCastelo(xPos, yPos, soldado, move)){
+							int castelo=g1.getCastleInPos(xPos, yPos, move);
+							System.out.println("O " + type + " da ilustre casa de " + g1.getTeamName() 
+								+ " adquiriu um novo castelo " + g1.getCastleName(castelo) + " para o seu reino.");
+							Castelo c2=g1.getCasteloInIndex(castelo);
+							g1.addCasteloToReino(c2);
+						}
 					g1.moveReinoSoldado(soldado, move);
 					}
 				}
@@ -124,6 +131,13 @@ public class Main {
 									" devia tentar ir para outro sitio.");
 						}
 						else {
+							if(g1.soldadoInCastelo(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado, move)){
+								int castelo=g1.getCastleInPos(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), move);
+								System.out.println("O " + type + " da ilustre casa de " + g1.getTeamName() 
+									+ " adquiriu um novo castelo " + g1.getCastleName(castelo) + " para o seu reino.");
+								Castelo c2=g1.getCasteloInIndex(castelo);
+								g1.addCasteloToReino(c2);
+							}
 							g1.moveReinoSoldado(soldado, move);
 						}
 					}
@@ -363,5 +377,3 @@ public class Main {
 	}
 	}
  }
-		
-

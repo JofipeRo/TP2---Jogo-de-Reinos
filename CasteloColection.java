@@ -52,6 +52,9 @@ public class CasteloColection {
 		}
 		return c2;
 	}
+	public Castelo getCasteloInIndex(int i) {
+		return c1[i];
+	}
 	public int getSumTreasure() {
 		int treasure=0;
 		for(int i=0; i<counterCastelo; i++) {
@@ -70,5 +73,50 @@ public class CasteloColection {
 	}
 	public boolean castleOcupado(int i, int x, int y) {
 		return c1[i].castleOcupado(x, y);
+	}
+	public boolean soldadoInCastelo(int xPos,int yPos, int soldado, String direcao) {
+		int xNewPos=xPos;
+		int yNewPos=yPos;
+		boolean equal=false;
+		if(direcao.equals("norte"))
+			yNewPos++;
+		if(direcao.equals("sul"))
+			yNewPos--;
+		if(direcao.equals("este"))
+			xNewPos++;
+		if(direcao.equals("oeste"))
+			xNewPos--;
+		for(int i=0; i<counterCastelo && equal==false ;i++) {
+			if(i==soldado) {
+			}
+			else {
+				if(yNewPos==c1[i].getYPos() && xNewPos==c1[i].getXPos()) {
+					equal=true;
+				}
+			}
+		}
+		return equal;
+	}
+	public int getCastleInPos(int xPos, int yPos, String direcao) {
+		int pos=-1;
+		boolean found=false;
+		int xNewPos=xPos;
+		int yNewPos=yPos;
+		if(direcao.equals("norte"))
+			yNewPos++;
+		if(direcao.equals("sul"))
+			yNewPos--;
+		if(direcao.equals("este"))
+			xNewPos++;
+		if(direcao.equals("oeste"))
+			xNewPos--;
+		for(int i=0; i<counterCastelo && found==false;i++) {
+			if(c1[i].getXPos()==xNewPos && c1[i].getYPos()==yNewPos) {
+				pos=i;
+				found=true;
+			}
+				
+		}
+		return pos;
 	}
 }

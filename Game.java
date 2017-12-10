@@ -61,6 +61,15 @@ public class Game {
 		for(int i=0;i<castelos.getCounter();i++) 
 			castelos.addMoney(i);
 	}
+	public boolean soldadoInCastelo(int xPos, int yPos, int soldado, String direcao) {
+		return castelos.soldadoInCastelo(xPos, yPos, soldado, direcao);
+	}
+	public int getCastleInPos(int xPos, int yPos, String direcao) {
+		return castelos.getCastleInPos(xPos, yPos, direcao);
+	}
+	public Castelo getCasteloInIndex(int i) {
+		return castelos.getCasteloInIndex(i);
+	}
 	//   **** REINOS ****
 	public int getCounterReinos() {
 		return reinos.getCounter();
@@ -110,6 +119,9 @@ public class Game {
 	}
 	public String printReinoSoldadoInfo(int i, int player) {
 		return reinos.printReinoSoldadoInfo(i, player);
+	}
+	public void addCasteloToReino(Castelo c2) {
+		reinos.addCasteloToReino(c2, getPlayer());
 	}
 	//    **** INTERACTOR ****
 	public void inicializeInteratiorPlayer() {

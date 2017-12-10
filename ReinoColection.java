@@ -42,8 +42,8 @@ public class ReinoColection {
 		}
 		return found;
 	}
-	public void addCasteloToReino(Castelo c2) {
-		r1[counterReino++].addCastelo(c2);
+	public void addCasteloToReino(Castelo c2, int i) {
+		r1[i].addCastelo(c2);
 	}
 	public String getReinoCastelosName(int i, int player) {
 		return r1[player].getCastleName(i);
