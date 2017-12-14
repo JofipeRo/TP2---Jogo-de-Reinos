@@ -163,7 +163,7 @@ public class Game {
 		return reinos.reinoHasCastle(getPlayer(), castle);
 	}
 	public String getReinoSoldadoType(int xPos, int yPos) {
-		return reinos.getReinoSoldadoType(reinos.findSoldado(xPos, yPos, getPlayer()), getPlayer());
+		return reinos.getReinoSoldadoType(reinos.findSoldadoIndex(xPos, yPos, getPlayer()), getPlayer());
 	}
 	public void moveReinoSoldado(int i, String direcao) {
 		reinos.moveReinoSoldado(i, direcao, getPlayer());
@@ -221,7 +221,7 @@ public class Game {
 		return reinos.getReinoSoldadoYPos(i, getPlayer());
 	}
 	public int saveWhichSoldado(int xPos, int yPos) {
-		return reinos.findSoldado(xPos, yPos, getPlayer());
+		return reinos.findSoldadoIndex(xPos, yPos, getPlayer());
 	}
 	public int enemyColision(int xPos, int yPos) {
 		return reinos.enemyColisiom(xPos, yPos, getPlayer());

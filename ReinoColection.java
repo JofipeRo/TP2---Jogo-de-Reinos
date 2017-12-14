@@ -102,8 +102,8 @@ public class ReinoColection {
 	public String getReinoSoldadoType(int i, int player) {
 		return r1[player].getSoldadoType(i);
 	}
-	public int findSoldado(int xPos, int yPos, int player) {
-		return r1[player].findSoldado(xPos, yPos);
+	public int findSoldadoIndex(int xPos, int yPos, int player) {
+		return r1[player].findSoldadoIndex(xPos, yPos);
 	}
 	public void moveReinoSoldado(int i, String direcao, int player) {
 		r1[player].moveSoldado(i, direcao);
@@ -126,7 +126,7 @@ public class ReinoColection {
 	public int compareType(String type, int xPos, int yPos, int player) {
 		int fightType=-1;
 		int teamSol2=enemyColisiom(xPos, yPos, player);
-		int indexSol2=findSoldado(xPos, yPos, teamSol2);
+		int indexSol2=findSoldadoIndex(xPos, yPos, teamSol2);
 		String type2= getReinoSoldadoType(indexSol2,teamSol2);
 		if(type.equals(type2)) {
 			fightType=0;
@@ -156,7 +156,7 @@ public class ReinoColection {
 	
 	public void killSoldier(String type, int xPos, int yPos, int player, int soldado) {
 		int teamSol2=enemyColisiom(xPos, yPos, player);
-		int indexSol2=findSoldado(xPos, yPos, teamSol2);
+		int indexSol2=findSoldadoIndex(xPos, yPos, teamSol2);
 		int fightCompare=compareType(type, xPos, yPos, player);
 		if(fightCompare==0)
 			r1[teamSol2].killSoldadoFromReino(indexSol2);
@@ -166,7 +166,7 @@ public class ReinoColection {
 	public String getFightMessage(String type, int xPos, int yPos, int player) {
 		String message="";
 		int teamSol2=enemyColisiom(xPos, yPos, player);
-		int indexSol2=findSoldado(xPos, yPos, teamSol2);
+		int indexSol2=findSoldadoIndex(xPos, yPos, teamSol2);
 		String type2= getReinoSoldadoType(indexSol2,teamSol2);
 		int fightCompare=compareType(type, xPos, yPos, player);
 		if(fightCompare==0) 

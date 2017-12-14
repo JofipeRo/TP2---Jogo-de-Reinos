@@ -81,8 +81,8 @@ public class Reino {
 	public String printSoldadoInfo(int i) {
 		return reinoSoldados.printSoldadoInfo(i);
 	}
-	public int findSoldado(int xPos, int yPos) {
-		return reinoSoldados.getSoldado(xPos, yPos);
+	public int findSoldadoIndex(int xPos, int yPos) {
+		return reinoSoldados.getSoldadoIndex(xPos, yPos);
 	}
 	public void moveSoldado(int i, String direcao) {
 		reinoSoldados.move(i , direcao);
