@@ -172,7 +172,7 @@ public class ReinoColection {
 		if(fightCompare==0) 
 			message="Muhahah, sou um " + r1[player].getReinoName() + "! Sou invencivel! Nenhum " +  type2 + " me faz frente!";
 		if(fightCompare==1)
-			message="Argh! A dor! Maldito sejas, " + type2 + " " + r1[teamSol2].getReinoName();
+			message="Argh! A dor! Maldito sejas, " + type2 + " " + r1[teamSol2].getReinoName()+".";
 		
 		return message;
 	}
@@ -191,8 +191,20 @@ public class ReinoColection {
 	}
 	public void removeReino(int player) {
 		for(int i=player;i<counterReino-1;i++) {
-			r1[player]=r1[player+1];
+			r1[i]=r1[i+1];
 		}
 		counterReino--;
+	}
+	public int isReinoDead() {
+		int dead =-1;
+		for(int i=0; i<counterReino && dead ==-1;i++) {
+			if(!r1[i].isReinoAlive()) {
+				dead = i;
+			}
+		}
+		return dead;
+	}
+	public boolean lastReino() {
+		return counterReino==1;
 	}
 }

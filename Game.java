@@ -27,7 +27,7 @@ public class Game {
 	public void startGame() {
 		gameOn=true;
 	}
-	public void closeGame(Game g1) {
+	public void closeGame() {
 		gameOn=false;
 	}
 	
@@ -126,6 +126,18 @@ public class Game {
 	public void removeCasteloFromReino(String name,String reino) {
 		reinos.removeCastleFromReino(name, reino);
 	}
+	public int isReinoDead() {
+		return reinos.isReinoDead();
+	}
+	public void removeReino(int player) {
+		if(player<=getPlayer()) {
+			playerBack();
+		}
+		reinos.removeReino(player);
+	}
+	public boolean lastReino() {
+		return reinos.lastReino();
+	}
 	//    **** INTERACTOR ****
 	public void inicializeInteratiorPlayer() {
 		currentPlayer=0;
@@ -143,6 +155,9 @@ public class Game {
 	}
 	public int getPlayer() {
 		return currentPlayer;
+	}
+	public void playerBack() {
+		currentPlayer--;
 	}
 	public boolean reinoHasCastle(String castle) {
 		return reinos.reinoHasCastle(getPlayer(), castle);

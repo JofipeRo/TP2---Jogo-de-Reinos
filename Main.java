@@ -85,6 +85,7 @@ public class Main {
 		}
 	
 	private static void moverSoldado(Game g1, Scanner s1) {
+		int compare=-1;
 		int xPos=s1.nextInt();
 		int yPos=s1.nextInt();
 		String move=null;
@@ -92,7 +93,6 @@ public class Main {
 		if(soldado==-1) {
 			System.out.println("Nao existe nenhum soldado ilustre da casa de " + g1.getTeamName() + " na posicao ("
 					+ xPos  + "," + yPos + ").");
-			s1.nextLine();
 		}
 		else {
 			String type=g1.getReinoSoldadoType(xPos, yPos);
@@ -109,29 +109,44 @@ public class Main {
 					else {
 					g1.moveReinoSoldado(soldado, move);
 					if(g1.enemyColision(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado))!=-1) {
+						compare=g1.fightCompare(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado));
 						System.out.println(g1.getMessageFromFight(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado)));
 						g1.killSoldadoFrom(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado);
 					}
-					if(g1.soldadoInCastelo(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado)){
-						int castelo=g1.getCastleInPos(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado));
-						String owner=g1.findOwner(g1.getCastleName(castelo));
-						if(!owner.equals(g1.getTeamName())) {
-							System.out.println("O " + type + " da ilustre casa de " + g1.getTeamName() 
-								+ " adquiriu um novo castelo " + g1.getCastleName(castelo) + " para o seu reino.");
-							if(!owner.equals("sem dono")) {
-								g1.removeCasteloFromReino(g1.getCastleName(castelo), owner);
+					if (compare==1) {
+						System.out.println(g1.getTeamName() + " " + type + " morto");
+					}
+					else {
+						if(g1.soldadoInCastelo(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado)){
+							int castelo=g1.getCastleInPos(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado));
+							String owner=g1.findOwner(g1.getCastleName(castelo));
+							if(!owner.equals(g1.getTeamName())) {
+								System.out.println("O " + type + " da ilustre casa de " + g1.getTeamName() 
+									+ " adquiriu um novo castelo " + g1.getCastleName(castelo) + " para o seu reino.");
+								if(!owner.equals("sem dono")) {
+									g1.removeCasteloFromReino(g1.getCastleName(castelo), owner);
+								}
+								Castelo c2=g1.getCasteloInIndex(castelo);
+								g1.addCasteloToReino(c2);
 							}
-							Castelo c2=g1.getCasteloInIndex(castelo);
-							g1.addCasteloToReino(c2);
 						}
 					}
 				}
 			}
-			System.out.println(g1.getTeamName() + " " + type + " (" + g1.getReinoSoldadoXPos(soldado)+ ","
-					+ g1.getReinoSoldadosYPos(soldado) + ")");
+				if(compare!=1) {
+					System.out.println(g1.getTeamName() + " " + type + " (" + g1.getReinoSoldadoXPos(soldado)+ ","
+							+ g1.getReinoSoldadosYPos(soldado) + ")");
+				}
+				if(g1.isReinoDead()!=-1)
+					g1.removeReino(g1.isReinoDead());
+				if(g1.lastReino()) {
+					System.out.println("Sou um heroi " + g1.getTeamName() + "! Vitoria gloriosa!");
+					g1.closeGame();
+				}
 		}
 			if(type.equals(CAVALEIRO)) {
 				for(int movesLeft=3; movesLeft>0; movesLeft--) {
+					compare=-1;
 					move=s1.next();
 					if(!g1.mapLimits(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), move)) {
 						System.out.println("O cavaleiro da ilustre casa de " + g1.getTeamName() + " e um cobardolas.");
@@ -144,10 +159,14 @@ public class Main {
 						else {
 							g1.moveReinoSoldado(soldado, move);
 							if(g1.enemyColision(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado))!=-1) {
+								compare=g1.fightCompare(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado));
 								if(g1.fightCompare(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado))==1)
 									movesLeft-=3;
 								System.out.println(g1.getMessageFromFight(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado)));
 								g1.killSoldadoFrom(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado);
+							}
+							if (compare==1) {
+								System.out.println(g1.getTeamName() + " " + type + " morto");
 							}
 							if(g1.soldadoInCastelo(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado)){
 								int castelo=g1.getCastleInPos(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado));
@@ -164,11 +183,22 @@ public class Main {
 							}
 						}
 					}
-					System.out.println(g1.getTeamName() + " " + CAVALEIRO + " (" + g1.getReinoSoldadoXPos(soldado)+ ","
-							+ g1.getReinoSoldadosYPos(soldado) + ")");
+					if(compare!=1) {
+						System.out.println(g1.getTeamName() + " " + type + " (" + g1.getReinoSoldadoXPos(soldado)+ ","
+								+ g1.getReinoSoldadosYPos(soldado) + ")");
+					}
+					if(g1.isReinoDead()!=-1) {
+						g1.removeReino(g1.isReinoDead());
+					}
+					if(g1.lastReino()) {
+						System.out.println("Sou um heroi " + g1.getTeamName() + "! Vitoria gloriosa!");
+						g1.closeGame();
+						movesLeft-=3;
+					}
 					}
 			}
 			}
+		s1.nextLine();
 		g1.nextPlayer();
 	}
 
@@ -236,11 +266,12 @@ public class Main {
 			System.out.println("Comando inactivo.");
 		}
 		else {
+			if(g1.getNCastlesByReino(g1.getPlayer())==0) {
+				System.out.println("Sem castelos.");
+			}
+			else {
 			System.out.println(g1.getNCastlesByReino(g1.getPlayer()) + " castelos:");
 			for(int i=0; i<g1.getNCastlesByReino(g1.getPlayer()); i++) {
-				if(g1.getNCastlesByReino(g1.getPlayer())==0)
-					System.out.println("Sem castelos.");
-				else {
 				System.out.println(g1.getCastelosNameByReino(i) + " com riqueza " + g1.getCastelosTreasureByReino(i)
 				+ " na posicao " + g1.getCastelosPositionByReino(i));}
 			}
@@ -312,7 +343,7 @@ public class Main {
 		}
 	}
 	private static void createGame(String command, Scanner s1, Game g1) {
-		g1.closeGame(g1);
+		g1.closeGame();
 		Castelo c2=null;
 		Reino r2=null;
 		String CastleName;
