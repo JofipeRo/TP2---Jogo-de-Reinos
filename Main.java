@@ -3,6 +3,7 @@
  */
 import java.util.Scanner;
 public class Main {
+	private static final String OPCAO_INEXISTENTE = "Opcao inexistente.";
 	private static final String CAVALEIRO = "cavaleiro";
 	private static final String LANCEIRO = "lanceiro";
 	private static final String ESPADACHIM = "espadachim";
@@ -76,7 +77,7 @@ public class Main {
 			moverSoldado(g1,s1);
 			break;
 		default:
-			System.out.println("Opcao inexistente.");
+			System.out.println(OPCAO_INEXISTENTE);
 			s1.nextLine();
 			break;
 		}
@@ -106,18 +107,28 @@ public class Main {
 								" devia tentar ir para outro sitio.");
 					}
 					else {
-						if(g1.soldadoInCastelo(xPos, yPos, soldado, move)){
-							int castelo=g1.getCastleInPos(xPos, yPos, move);
+					g1.moveReinoSoldado(soldado, move);
+					if(g1.enemyColision(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado))!=-1) {
+						System.out.println(g1.getMessageFromFight(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado)));
+						g1.killSoldadoFrom(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado);
+					}
+					if(g1.soldadoInCastelo(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado)){
+						int castelo=g1.getCastleInPos(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado));
+						String owner=g1.findOwner(g1.getCastleName(castelo));
+						if(!owner.equals(g1.getTeamName())) {
 							System.out.println("O " + type + " da ilustre casa de " + g1.getTeamName() 
 								+ " adquiriu um novo castelo " + g1.getCastleName(castelo) + " para o seu reino.");
+							if(!owner.equals("sem dono")) {
+								g1.removeCasteloFromReino(g1.getCastleName(castelo), owner);
+							}
 							Castelo c2=g1.getCasteloInIndex(castelo);
 							g1.addCasteloToReino(c2);
 						}
-					g1.moveReinoSoldado(soldado, move);
 					}
 				}
-				System.out.println(g1.getTeamName() + " " + type + " (" + g1.getReinoSoldadoXPos(soldado)+ ","
-						+ g1.getReinoSoldadosYPos(soldado) + ")");
+			}
+			System.out.println(g1.getTeamName() + " " + type + " (" + g1.getReinoSoldadoXPos(soldado)+ ","
+					+ g1.getReinoSoldadosYPos(soldado) + ")");
 		}
 			if(type.equals(CAVALEIRO)) {
 				for(int movesLeft=3; movesLeft>0; movesLeft--) {
@@ -131,14 +142,26 @@ public class Main {
 									" devia tentar ir para outro sitio.");
 						}
 						else {
-							if(g1.soldadoInCastelo(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado, move)){
-								int castelo=g1.getCastleInPos(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), move);
+							g1.moveReinoSoldado(soldado, move);
+							if(g1.enemyColision(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado))!=-1) {
+								if(g1.fightCompare(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado))==1)
+									movesLeft-=3;
+								System.out.println(g1.getMessageFromFight(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado)));
+								g1.killSoldadoFrom(type, g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado);
+							}
+							if(g1.soldadoInCastelo(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado), soldado)){
+								int castelo=g1.getCastleInPos(g1.getReinoSoldadoXPos(soldado), g1.getReinoSoldadosYPos(soldado));
+								String owner=g1.findOwner(g1.getCastleName(castelo));
+								if(!owner.equals(g1.getTeamName())) {
 								System.out.println("O " + type + " da ilustre casa de " + g1.getTeamName() 
 									+ " adquiriu um novo castelo " + g1.getCastleName(castelo) + " para o seu reino.");
+								if(!owner.equals("sem dono")) {
+									g1.removeCasteloFromReino(g1.getCastleName(castelo), owner);
+								}
 								Castelo c2=g1.getCasteloInIndex(castelo);
 								g1.addCasteloToReino(c2);
+								}
 							}
-							g1.moveReinoSoldado(soldado, move);
 						}
 					}
 					System.out.println(g1.getTeamName() + " " + CAVALEIRO + " (" + g1.getReinoSoldadoXPos(soldado)+ ","
@@ -215,8 +238,11 @@ public class Main {
 		else {
 			System.out.println(g1.getNCastlesByReino(g1.getPlayer()) + " castelos:");
 			for(int i=0; i<g1.getNCastlesByReino(g1.getPlayer()); i++) {
+				if(g1.getNCastlesByReino(g1.getPlayer())==0)
+					System.out.println("Sem castelos.");
+				else {
 				System.out.println(g1.getCastelosNameByReino(i) + " com riqueza " + g1.getCastelosTreasureByReino(i)
-				+ " na posicao " + g1.getCastelosPositionByReino(i));
+				+ " na posicao " + g1.getCastelosPositionByReino(i));}
 			}
 		}
 	}
@@ -323,14 +349,22 @@ public class Main {
 						castleTreasure = s1.nextInt();
 						CastleName=s1.nextLine().trim();
 						if(xC>0 && xC<=x && yC>0 && yC<=y) {
-							if(castleTreasure>0) {
-								c2 = new Castelo(CastleName, castleTreasure, xC, yC);
-								g1.addCastles(c2);
-							}
+							if(g1.castleInSamePos(xC, yC))
+								System.out.println("Castelo em posicao invalida.");
 							else {
-								System.out.println("Castelo com riqueza invalida.");
+								if(g1.castleNameFound(CastleName))
+									System.out.println("Os castelos nao podem ter nomes duplicados.");
+								else {
+									if(castleTreasure>0) {
+										c2 = new Castelo(CastleName, castleTreasure, xC, yC);
+										g1.addCastles(c2);
+									}
+									else {
+										System.out.println("Castelo com riqueza invalida.");
+								}
 							}
 							}
+						}
 						else {
 							System.out.println("Castelo em posicao invalida.");
 						}
@@ -371,9 +405,9 @@ public class Main {
 							g1.startGame();
 							System.out.println("Jogo iniciado, comeca o reino " + g1.getTeamName() + ".");
 						}
-	}
-	}
-	}
-	}
+					}
+				}
+			}
+		}
 	}
  }

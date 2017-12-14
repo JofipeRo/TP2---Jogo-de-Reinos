@@ -66,4 +66,20 @@ public class SoldadoColection {
 		}
 		return equal;
 	}
+	public int enemyColision(int xPos, int yPos) {
+		int colision=-1;
+		for(int i=0; i<counterSoldados && colision==-1 ;i++) {
+			if(yPos==soldados[i].getYPos() && xPos==soldados[i].getXPos()) {
+				colision=i;
+			}
+		}
+		return colision;
+
+	}
+	public void killSoldado(int soldado) {
+		for(int i=soldado;i<counterSoldados-1;i++) {
+			soldados[i]=soldados[i+1];
+		}
+		counterSoldados--;
+	}
 }

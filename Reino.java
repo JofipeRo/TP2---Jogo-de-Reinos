@@ -90,4 +90,16 @@ public class Reino {
 	public boolean soldadoColision(int xPos,int yPos, int soldado, String direcao) {
 		return reinoSoldados.colision(xPos, yPos, soldado, direcao);
 	}
+	public int enemyColision(int xPos, int yPos) {
+		return reinoSoldados.enemyColision(xPos, yPos);
+	}
+	public void killSoldadoFromReino(int soldado) {
+		reinoSoldados.killSoldado(soldado);
+	}
+	public void removeCastleFromReino(String name) {
+		reinoCastelos.removeCastle(name);
+	}
+	public boolean isReinoAlive() {
+		return reinoCastelos.getCounter()>0 || reinoSoldados.getCounterSoldados()>0;
+	}
 }

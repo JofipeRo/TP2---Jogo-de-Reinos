@@ -25,6 +25,17 @@ public class CasteloColection {
 	public int getCounter() {
 		return counterCastelo;
 	}
+	public void removeCastle(String name) {
+		int castelo=-1;
+		for(int i0=0;i0<counterCastelo;i0++) {
+			if(c1[i0].getName().equals(name))
+				castelo=i0;
+		}
+		for(int i=castelo;i<counterCastelo-1;i++) {
+			c1[i]=c1[i+1];
+		}
+		counterCastelo--;
+	}
 	public boolean nameFound(String name) {
 		boolean found=false;
 		for(int i=0;i<counterCastelo;i++) {
@@ -74,49 +85,34 @@ public class CasteloColection {
 	public boolean castleOcupado(int i, int x, int y) {
 		return c1[i].castleOcupado(x, y);
 	}
-	public boolean soldadoInCastelo(int xPos,int yPos, int soldado, String direcao) {
-		int xNewPos=xPos;
-		int yNewPos=yPos;
+	public boolean soldadoInCastelo(int xPos,int yPos, int soldado) {
 		boolean equal=false;
-		if(direcao.equals("norte"))
-			yNewPos++;
-		if(direcao.equals("sul"))
-			yNewPos--;
-		if(direcao.equals("este"))
-			xNewPos++;
-		if(direcao.equals("oeste"))
-			xNewPos--;
 		for(int i=0; i<counterCastelo && equal==false ;i++) {
-			if(i==soldado) {
-			}
-			else {
-				if(yNewPos==c1[i].getYPos() && xNewPos==c1[i].getXPos()) {
+				if(yPos==c1[i].getYPos() && xPos==c1[i].getXPos()) {
 					equal=true;
-				}
 			}
 		}
 		return equal;
 	}
-	public int getCastleInPos(int xPos, int yPos, String direcao) {
+	public int getCastleInPos(int xPos, int yPos) {
 		int pos=-1;
 		boolean found=false;
-		int xNewPos=xPos;
-		int yNewPos=yPos;
-		if(direcao.equals("norte"))
-			yNewPos++;
-		if(direcao.equals("sul"))
-			yNewPos--;
-		if(direcao.equals("este"))
-			xNewPos++;
-		if(direcao.equals("oeste"))
-			xNewPos--;
 		for(int i=0; i<counterCastelo && found==false;i++) {
-			if(c1[i].getXPos()==xNewPos && c1[i].getYPos()==yNewPos) {
+			if(c1[i].getXPos()==xPos && c1[i].getYPos()==yPos) {
 				pos=i;
 				found=true;
 			}
 				
 		}
 		return pos;
+	}
+	public boolean castleInSamePos(int xPos, int yPos) {
+		boolean found=false;
+		for(int i=0;i<counterCastelo && found==false;i++) {
+			if(c1[i].getXPos()==xPos && c1[i].getYPos()==yPos) {
+				found=true;
+			}
+		}
+		return found;
 	}
 }

@@ -61,11 +61,11 @@ public class Game {
 		for(int i=0;i<castelos.getCounter();i++) 
 			castelos.addMoney(i);
 	}
-	public boolean soldadoInCastelo(int xPos, int yPos, int soldado, String direcao) {
-		return castelos.soldadoInCastelo(xPos, yPos, soldado, direcao);
+	public boolean soldadoInCastelo(int xPos, int yPos, int soldado) {
+		return castelos.soldadoInCastelo(xPos, yPos, soldado);
 	}
-	public int getCastleInPos(int xPos, int yPos, String direcao) {
-		return castelos.getCastleInPos(xPos, yPos, direcao);
+	public int getCastleInPos(int xPos, int yPos) {
+		return castelos.getCastleInPos(xPos, yPos);
 	}
 	public Castelo getCasteloInIndex(int i) {
 		return castelos.getCasteloInIndex(i);
@@ -123,6 +123,9 @@ public class Game {
 	public void addCasteloToReino(Castelo c2) {
 		reinos.addCasteloToReino(c2, getPlayer());
 	}
+	public void removeCasteloFromReino(String name,String reino) {
+		reinos.removeCastleFromReino(name, reino);
+	}
 	//    **** INTERACTOR ****
 	public void inicializeInteratiorPlayer() {
 		currentPlayer=0;
@@ -171,6 +174,9 @@ public class Game {
 	public boolean mapSize() {
 		return (getXMap()>=10 && getYMap()>=10);
 	}
+	public boolean castleInSamePos(int xPos, int yPos) {
+		return castelos.castleInSamePos(xPos, yPos);
+	}
 	public boolean castleNameFound(String castle) {
 		return castelos.nameFound(castle);
 	}
@@ -202,5 +208,16 @@ public class Game {
 	public int saveWhichSoldado(int xPos, int yPos) {
 		return reinos.findSoldado(xPos, yPos, getPlayer());
 	}
+	public int enemyColision(int xPos, int yPos) {
+		return reinos.enemyColisiom(xPos, yPos, getPlayer());
+	}
+	public void killSoldadoFrom(String type, int xPos, int yPos, int soldado) {
+		reinos.killSoldier(type, xPos, yPos, getPlayer(), soldado);
+	}
+	public String getMessageFromFight(String type, int xPos, int yPos) {
+		return reinos.getFightMessage(type, xPos, yPos, getPlayer());
+	}
+	public int fightCompare(String type, int xPos, int yPos) {
+		return reinos.compareType(type, xPos, yPos, getPlayer());
+	}
 }
-

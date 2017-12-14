@@ -111,4 +111,88 @@ public class ReinoColection {
 	public boolean reinoSoldadoColision(int xPos,int yPos, int soldado, String direcao, int player) {
 		return r1[player].soldadoColision(xPos, yPos, soldado, direcao);
 	}
+	public int enemyColisiom(int xPos, int yPos, int player) {
+		int colision=-1;
+		for(int i=0;i<counterReino;i++) {
+			if(i==player) {}
+			else {
+				if(r1[i].enemyColision(xPos, yPos)!=-1)
+					colision=i;
+			}
+		}
+		return colision;
+	}
+	// 0 - morre equipa 2     1 - morre equipa 1
+	public int compareType(String type, int xPos, int yPos, int player) {
+		int fightType=-1;
+		int teamSol2=enemyColisiom(xPos, yPos, player);
+		int indexSol2=findSoldado(xPos, yPos, teamSol2);
+		String type2= getReinoSoldadoType(indexSol2,teamSol2);
+		if(type.equals(type2)) {
+			fightType=0;
+		}
+		else {
+			if(type.equals("espadachim")) {
+				if(type2.equals("lanceiro"))
+					fightType=0;
+				if(type2.equals("cavaleiro"))
+					fightType=1;
+				}
+			if(type.equals("lanceiro")) {
+				if(type2.equals("espadachim"))
+					fightType=1;
+				if(type2.equals("cavaleiro"))
+					fightType=0;
+			}
+			if(type.equals("cavaleiro")) {
+				if(type2.equals("lanceiro"))
+					fightType=1;
+				if(type2.equals("espadachim"))
+					fightType=0;
+			}
+		}
+		return fightType;
+	}
+	
+	public void killSoldier(String type, int xPos, int yPos, int player, int soldado) {
+		int teamSol2=enemyColisiom(xPos, yPos, player);
+		int indexSol2=findSoldado(xPos, yPos, teamSol2);
+		int fightCompare=compareType(type, xPos, yPos, player);
+		if(fightCompare==0)
+			r1[teamSol2].killSoldadoFromReino(indexSol2);
+		if(fightCompare==1) 
+			r1[player].killSoldadoFromReino(soldado);
+	}
+	public String getFightMessage(String type, int xPos, int yPos, int player) {
+		String message="";
+		int teamSol2=enemyColisiom(xPos, yPos, player);
+		int indexSol2=findSoldado(xPos, yPos, teamSol2);
+		String type2= getReinoSoldadoType(indexSol2,teamSol2);
+		int fightCompare=compareType(type, xPos, yPos, player);
+		if(fightCompare==0) 
+			message="Muhahah, sou um " + r1[player].getReinoName() + "! Sou invencivel! Nenhum " +  type2 + " me faz frente!";
+		if(fightCompare==1)
+			message="Argh! A dor! Maldito sejas, " + type2 + " " + r1[teamSol2].getReinoName();
+		
+		return message;
+	}
+	public int getReinoWithNameIndex(String reino) {
+		int player=-1;
+		for(int i=0;i<counterReino;i++) {
+			if(r1[i].getReinoName().equals(reino)) {
+				player=i;
+			}
+		}
+		return player;
+	}
+	public void removeCastleFromReino(String name, String reino) {
+		int player=getReinoWithNameIndex(reino);
+		r1[player].removeCastleFromReino(name);
+	}
+	public void removeReino(int player) {
+		for(int i=player;i<counterReino-1;i++) {
+			r1[player]=r1[player+1];
+		}
+		counterReino--;
+	}
 }
